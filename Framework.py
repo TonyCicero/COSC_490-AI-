@@ -1,7 +1,7 @@
 from DecisionFactory import DecisionFactory  
 import pygame, sys
 from pygame.locals import *
-
+from pygame.time import Clock
 
 black = (0, 0, 0)
 white = (255, 255, 255)
@@ -52,14 +52,14 @@ def validate_move(DF):
     global Grid
     global STEPS
     choice = DF.get_decision()
-    if choice == 'up':
-        check_pos = [POSITION[0],POSITION[1]+1]
-    if choice == 'down':
-        check_pos = [POSITION[0],POSITION[1]-1]
-    if choice == 'left':
-        check_pos = [POSITION[0]-1,POSITION[1]]
     if choice == 'right':
-        check_pos = [POSITION[0]+1,POSITION[1]+1]
+        check_pos = [POSITION[0],POSITION[1]+1]
+    if choice == 'left':
+        check_pos = [POSITION[0],POSITION[1]-1]
+    if choice == 'down':
+        check_pos = [POSITION[0]+1,POSITION[1]]
+    if choice == 'up':
+        check_pos = [POSITION[0]-1,POSITION[1]]
     if choice == 'wait':
         check_pos = [POSITION[0],POSITION[1]]
     tile = Grid[check_pos[0]][check_pos[1]]
@@ -79,8 +79,8 @@ def validate_move(DF):
         STEPS += 1
         return 'success'
     else: 
-		STEPS += 1
-		return 'wall'
+        STEPS += 1
+        return 'wall'
     
 def open_map():
     global Grid
@@ -112,7 +112,7 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((MAPWIDTH*TILESIZE, MAPHEIGHT*TILESIZE))
     pygame.display.set_caption('490 AI')
-
+    clock = pygame.time.Clock()
     #instantiate DF
     DF = DecisionFactory()
 
@@ -125,14 +125,15 @@ def main():
                 
  
 	
-    	for row in range(MAPHEIGHT):
-			for col in range(MAPWIDTH):
-				pygame.draw.rect(screen, colours[Grid[row][col]], [col*TILESIZE, row*TILESIZE, TILESIZE, TILESIZE])
-         
+        for row in range(MAPHEIGHT):
+            for col in range(MAPWIDTH):
+                pygame.draw.rect(screen, colours[Grid[row][col]], [col*TILESIZE, row*TILESIZE, TILESIZE, TILESIZE])
+            
         
     	
         DF.put_result(validate_move(DF))   
-        pygame.display.update()
-    print "Portal found in:",STEPS,"steps"
+        pygame.display.flip()
+        clock.tick(10)
+    print ("Portal found in:",STEPS,"steps")
 
 if __name__ == '__main__': main()
