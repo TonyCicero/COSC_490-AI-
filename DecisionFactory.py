@@ -1,4 +1,3 @@
-
   
 import random
 import numpy as np
@@ -36,15 +35,15 @@ class DecisionFactory:
     
     def random_direction(self):
         #r = random.randint(0,4) # Includes wait state
-        
-        print(self.pos)
+        print(self.last_result)
+        print('position:',self.pos)
         print(self.map)
         
-        if(self.map[self.pos[0]][self.pos[1]] == 0): #can move anywhere
+        if(self.map[self.pos[1]][self.pos[0]]  == 0): #can move anywhere
             r = random.randint (1,4) # Does NOT include wait
             i = 0
         else:
-            i = self.map[self.pos[0]][self.pos[1]]
+            i = self.map[self.pos[1]][self.pos[0]] 
             n = len(self.directions[i]) #number of directions 
             r = random.randint (1,n-1) # Does NOT include wait
             
@@ -88,70 +87,70 @@ class DecisionFactory:
             
             
         if (result == 'wall'):
-            self.map[self.pos[0]][self.pos[1]] = 1
+            self.map[self.pos[1]][self.pos[0]] = 1
             if(self.last_direction == 'up'):
                 self.pos[1] += 1
-                if(self.map[self.pos[0]][self.pos[1]] == 0):
-                    self.map[self.pos[0]][self.pos[1]] = 4
-                elif(self.map[self.pos[0]][self.pos[1]] == 5):
-                    self.map[self.pos[0]][self.pos[1]] = 8
-                elif(self.map[self.pos[0]][self.pos[1]] == 6):
-                    self.map[self.pos[0]][self.pos[1]] = 12
-                elif(self.map[self.pos[0]][self.pos[1]] == 7):
-                    self.map[self.pos[0]][self.pos[1]] = 11
-                elif(self.map[self.pos[0]][self.pos[1]] == 9):
-                    self.map[self.pos[0]][self.pos[1]] = 17
-                elif(self.map[self.pos[0]][self.pos[1]] == 10):
-                    self.map[self.pos[0]][self.pos[1]] = 16
-                elif(self.map[self.pos[0]][self.pos[1]] == 13):
-                    self.map[self.pos[0]][self.pos[1]] = 14
+                if(self.map[self.pos[1]][self.pos[0]] == 0):
+                    self.map[self.pos[1]][self.pos[0]]  = 4
+                elif(self.map[self.pos[1]][self.pos[0]]  == 5):
+                    self.map[self.pos[1]][self.pos[0]]  = 8
+                elif(self.map[self.pos[1]][self.pos[0]]  == 6):
+                    self.map[self.pos[1]][self.pos[0]]  = 12
+                elif(self.map[self.pos[1]][self.pos[0]]  == 7):
+                    self.map[self.pos[1]][self.pos[0]]  = 11
+                elif(self.map[self.pos[1]][self.pos[0]]  == 9):
+                    self.map[self.pos[1]][self.pos[0]]  = 17
+                elif(self.map[self.pos[1]][self.pos[0]]  == 10):
+                    self.map[self.pos[1]][self.pos[0]]  = 16
+                elif(self.map[self.pos[1]][self.pos[0]]  == 13):
+                    self.map[self.pos[1]][self.pos[0]]  = 14
             elif(self.last_direction == 'left'):
                 self.pos[0] += 1
-                if(self.map[self.pos[0]][self.pos[1]] == 0):
-                    self.map[self.pos[0]][self.pos[1]] = 5
-                elif(self.map[self.pos[0]][self.pos[1]] == 4):
-                    self.map[self.pos[0]][self.pos[1]] = 8
-                elif(self.map[self.pos[0]][self.pos[1]] == 6):
-                    self.map[self.pos[0]][self.pos[1]] = 9
-                elif(self.map[self.pos[0]][self.pos[1]] == 7):
-                    self.map[self.pos[0]][self.pos[1]] = 13
-                elif(self.map[self.pos[0]][self.pos[1]] == 10):
-                    self.map[self.pos[0]][self.pos[1]] = 14
-                elif(self.map[self.pos[0]][self.pos[1]] == 11):
-                    self.map[self.pos[0]][self.pos[1]] = 14
-                elif(self.map[self.pos[0]][self.pos[1]] == 12):
-                    self.map[self.pos[0]][self.pos[1]] = 17
+                if(self.map[self.pos[1]][self.pos[0]]  == 0):
+                    self.map[self.pos[1]][self.pos[0]]  = 5
+                elif(self.map[self.pos[1]][self.pos[0]]  == 4):
+                    self.map[self.pos[1]][self.pos[0]]  = 8
+                elif(self.map[self.pos[1]][self.pos[0]]  == 6):
+                    self.map[self.pos[1]][self.pos[0]]  = 9
+                elif(self.map[self.pos[1]][self.pos[0]]  == 7):
+                    self.map[self.pos[1]][self.pos[0]]  = 13
+                elif(self.map[self.pos[1]][self.pos[0]]  == 10):
+                    self.map[self.pos[1]][self.pos[0]]  = 14
+                elif(self.map[self.pos[1]][self.pos[0]]  == 11):
+                    self.map[self.pos[1]][self.pos[0]]  = 14
+                elif(self.map[self.pos[1]][self.pos[0]]  == 12):
+                    self.map[self.pos[1]][self.pos[0]]  = 17
             elif(self.last_direction == 'right'):
                 self.pos[0] -= 1
-                if(self.map[self.pos[0]][self.pos[1]] == 0):
-                    self.map[self.pos[0]][self.pos[1]] = 7
-                elif(self.map[self.pos[0]][self.pos[1]] == 4):
-                    self.map[self.pos[0]][self.pos[1]] = 11
-                elif(self.map[self.pos[0]][self.pos[1]] == 5):
-                    self.map[self.pos[0]][self.pos[1]] = 13
-                elif(self.map[self.pos[0]][self.pos[1]] == 6):
-                    self.map[self.pos[0]][self.pos[1]] = 10
-                elif(self.map[self.pos[0]][self.pos[1]] == 8):
-                    self.map[self.pos[0]][self.pos[1]] = 14
-                elif(self.map[self.pos[0]][self.pos[1]] == 12):
-                    self.map[self.pos[0]][self.pos[1]] = 16
-                elif(self.map[self.pos[0]][self.pos[1]] == 9):
-                    self.map[self.pos[0]][self.pos[1]] = 15
+                if(self.map[self.pos[1]][self.pos[0]]  == 0):
+                    self.map[self.pos[1]][self.pos[0]]  = 7
+                elif(self.map[self.pos[1]][self.pos[0]]  == 4):
+                    self.map[self.pos[1]][self.pos[0]]  = 11
+                elif(self.map[self.pos[1]][self.pos[0]]  == 5):
+                    self.map[self.pos[1]][self.pos[0]]  = 13
+                elif(self.map[self.pos[1]][self.pos[0]]  == 6):
+                    self.map[self.pos[1]][self.pos[0]]  = 10
+                elif(self.map[self.pos[1]][self.pos[0]]  == 8):
+                    self.map[self.pos[1]][self.pos[0]]  = 14
+                elif(self.map[self.pos[1]][self.pos[0]]  == 12):
+                    self.map[self.pos[1]][self.pos[0]]  = 16
+                elif(self.map[self.pos[1]][self.pos[0]]  == 9):
+                    self.map[self.pos[1]][self.pos[0]]  = 15
             elif(self.last_direction == 'down'):
                 self.pos[1] -= 1
-                if(self.map[self.pos[0]][self.pos[1]] == 0):
-                    self.map[self.pos[0]][self.pos[1]] = 6
-                elif(self.map[self.pos[0]][self.pos[1]] == 4):
-                    self.map[self.pos[0]][self.pos[1]] = 12
-                elif(self.map[self.pos[0]][self.pos[1]] == 5):
-                    self.map[self.pos[0]][self.pos[1]] = 9
-                elif(self.map[self.pos[0]][self.pos[1]] == 7):
-                    self.map[self.pos[0]][self.pos[1]] = 10
-                elif(self.map[self.pos[0]][self.pos[1]] == 8):
-                    self.map[self.pos[0]][self.pos[1]] = 17
-                elif(self.map[self.pos[0]][self.pos[1]] == 11):
-                    self.map[self.pos[0]][self.pos[1]] = 16
-                elif(self.map[self.pos[0]][self.pos[1]] == 13):
-                    self.map[self.pos[0]][self.pos[1]] = 15
+                if(self.map[self.pos[1]][self.pos[0]]  == 0):
+                    self.map[self.pos[1]][self.pos[0]]  = 6
+                elif(self.map[self.pos[1]][self.pos[0]]  == 4):
+                    self.map[self.pos[1]][self.pos[0]]  = 12
+                elif(self.map[self.pos[1]][self.pos[0]]  == 5):
+                    self.map[self.pos[1]][self.pos[0]]  = 9
+                elif(self.map[self.pos[1]][self.pos[0]]  == 7):
+                    self.map[self.pos[1]][self.pos[0]]  = 10
+                elif(self.map[self.pos[1]][self.pos[0]]  == 8):
+                    self.map[self.pos[1]][self.pos[0]]  = 17
+                elif(self.map[self.pos[1]][self.pos[0]]  == 11):
+                    self.map[self.pos[1]][self.pos[0]]  = 16
+                elif(self.map[self.pos[1]][self.pos[0]]  == 13):
+                    self.map[self.pos[1]][self.pos[0]]  = 15
             
             
