@@ -1,7 +1,7 @@
   
 import random
 import numpy as np
-
+from collections import defaultdict 
 class DecisionFactory:
     
     def __init__ (self, name='Davros'):
@@ -28,6 +28,8 @@ class DecisionFactory:
         self.last_direction = 'wait'
         self.pos = [0,0]
         self.map=np.zeros((2,2),dtype=int)
+        self.StartPos = [0,0]
+        self.graph = defaultdict(list) 
         
 
     def get_decision(self, verbose = True):
@@ -38,6 +40,7 @@ class DecisionFactory:
         print(self.last_result)
         print('position:',self.pos)
         print(self.map)
+        print('Start position:',self.StartPos)
         
         if(self.pos[1]+1 > self.map.shape[0]-1 and self.map[self.pos[1]][self.pos[0]] not in [6,10,12,15,16,17]) : # y > height
             self.last_direction = 'down'
@@ -78,12 +81,16 @@ class DecisionFactory:
         print(self.last_direction)
         return self.directions[i][r]
     
+    def addEdge(self,u,v): 
+        self.graph[u].append(v) 
+        
+    def BFS(self):
+        
     def put_result(self, result):
         
         self.last_result = result
         
-        
-
+       
         if(self.last_direction == 'up'):
            self.pos[1] -= 1
         if(self.last_direction == 'left'):
@@ -92,11 +99,17 @@ class DecisionFactory:
            self.pos[0] += 1
         if(self.last_direction == 'down'):
            self.pos[1] += 1
-        
+        if (self.last_result == 'portal'):
+           self.map[self.pos[1]][self.pos[0]] = 2
+           self.pos[1] = self.StartPos[1]
+           self.pos[0] = self.StartPos[0]
+           return
+            
         if (self.pos[1] < 0):    #expand up
             new=np.zeros((1,self.map.shape[1]),dtype=int)
             self.map=np.vstack((new,self.map))
             self.pos[1] = 0
+            self.StartPos[1] +=1
             print("expand up")
         elif (self.pos[1] > self.map.shape[0]-1):    #expand down
             new=np.zeros((1,self.map.shape[1]),dtype=int)
@@ -106,6 +119,7 @@ class DecisionFactory:
             new=np.zeros((self.map.shape[0],1),dtype=int)
             self.map=np.hstack((new, self.map))
             self.pos[0]=0
+            self.StartPos[0] +=1
             print("expand left")
         elif (self.pos[0] > self.map.shape[1]-1):    #expand right
             new=np.zeros((self.map.shape[0],1),dtype=int)

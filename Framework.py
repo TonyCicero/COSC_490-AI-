@@ -25,32 +25,39 @@ TILESIZE = 50
 MAPWIDTH = 10
 MAPHEIGHT = 10
 
+RUNCOUNT = 0
+
 #current position of player [row, col]
 POSITION = [3,3]
+STARTPOSITION = [3,3]
 
 #PLAYER HAS FOUND GOAL
 FINISHED = False
 
 #Steps to reach Portal
-STEPS = 0;
+STEPS = 0
 
 #find starting position
 def find_pos():
     global POSITION
-    
+    global STARTPOSITION
     for row in range(MAPHEIGHT):
         for col in range(MAPWIDTH):
             tile = Grid[row][col]
             if tile == 2:
                 POSITION = [row, col]
+                STARTPOSITION =[row, col]
+                print(STARTPOSITION)
                 return
 
 #gets decision & checks if valid
 def validate_move(DF):
     global FINISHED
     global POSITION
+    global STARTPOSITION
     global Grid
     global STEPS
+    global RUNCOUNT
     choice = DF.get_decision()
     if choice == 'right':
         check_pos = [POSITION[0],POSITION[1]+1]
@@ -68,8 +75,16 @@ def validate_move(DF):
         POSITION[0] = check_pos[0]
         POSITION[1] = check_pos[1]
         Grid[POSITION[0]][POSITION[1]] = 2
-        FINISHED = True
         STEPS += 1
+        RUNCOUNT-=1
+        
+        
+       
+        print(STARTPOSITION)
+        Grid[POSITION[0]][POSITION[1]] = 3
+        POSITION[0]=STARTPOSITION[0]
+        POSITION[1]=STARTPOSITION[1]
+        Grid[POSITION[0]][POSITION[1]] = 2
         return 'portal'
     if tile == 0:
         Grid[POSITION[0]][POSITION[1]] = 0
@@ -99,6 +114,8 @@ def main():
     global MAPWIDTH
     global MAPHEIGHT
     global Grid
+    global RUNCOUNT
+    global FINISHED
     #read map
     open_map()
     
@@ -115,7 +132,10 @@ def main():
     clock = pygame.time.Clock()
     #instantiate DF
     DF = DecisionFactory()
-
+	
+    print("How many time should it run?")
+    RUNCOUNT = int(input()) 
+	
     # Event loop
     while not FINISHED:
         for event in pygame.event.get():
@@ -132,6 +152,8 @@ def main():
         
     	
         DF.put_result(validate_move(DF))   
+        if(RUNCOUNT == 0):
+            FINISHED = True
         pygame.display.flip()
         clock.tick(10)
     print ("Portal found in:",STEPS,"steps")
