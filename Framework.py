@@ -59,6 +59,7 @@ def validate_move(DF):
     global STEPS
     global RUNCOUNT
     choice = DF.get_decision()
+    print(choice)
     if choice == 'right':
         check_pos = [POSITION[0],POSITION[1]+1]
     if choice == 'left':
@@ -77,7 +78,8 @@ def validate_move(DF):
         Grid[POSITION[0]][POSITION[1]] = 2
         STEPS += 1
         RUNCOUNT-=1
-        
+        print ("Portal found in:",STEPS,"steps")
+        STEPS = 0
         
        
         print(STARTPOSITION)
@@ -156,6 +158,6 @@ def main():
             FINISHED = True
         pygame.display.flip()
         clock.tick(10)
-    print ("Portal found in:",STEPS,"steps")
+    
 
 if __name__ == '__main__': main()
